@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <title>Audit</title>
+
+    <link
+      href="{{ url_for('static', path='/output.css') }}"
+      rel="stylesheet"
+      type="text/css"
+    />
+  </head>
+</html>
+<body>
+  <section
+    class="fixed w-[400px] top-0 left-0 bottom-0 p-4 flex flex-col gap-2 bg-white overflow-scroll"
+  >
+    {% for file in files %}
+    <a
+      href="#{{ file.name }}"
+      class="truncate w-full h-fit shrink-0"
+      title="{{ file.name }}"
+      >{{ file.name }}</a
+    >
+    {% endfor %}
+  </section>
+
+  <div
+    class="p-4 flex flex-col gap-4 relative left-[400px] w-[calc(100%-400px)]"
+  >
+    {% for file in files %}
+    <div
+      class="rounded-lg border border-gray w-full relative"
+      id="{{ file.name }}"
+    >
+      <div
+        class="font-semibold p-4 border-b border-b-gray sticky top-0 bg-gray-200"
+      >
+        {{ file.name }}
+      </div>
+
+      <div class="overflow-scroll p-4">
+        {% for line in file.contents %}
+        <pre>{{ line }}</pre>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</body>
