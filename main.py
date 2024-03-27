@@ -38,10 +38,21 @@ def is_ignored(path):
 
 
 def all_files_in_directory(directory):
-    for root, dirs, files in os.walk(directory, topdown=False):
-        for file in files:
-            full_path = os.path.join(root, file)
-            yield full_path
+    directories = []
+    files = []
+    for entry in os.scandir(directory):
+        if entry.is_dir():
+            directories.append(entry.path)
+        elif entry.is_file():
+            files.append(entry.path)
+
+    directories = sorted(directories)
+
+    for d in directories:
+        yield from all_files_in_directory(d)
+
+    for f in files:
+        yield f
 
 
 def all_non_ignored_paths_in_directory(directory):
@@ -51,7 +62,7 @@ def all_non_ignored_paths_in_directory(directory):
 
 
 @app.get("/")
-@app.get("/{subdirectory}", response_class=HTMLResponse)
+@app.get("/{subdirectory:path}", response_class=HTMLResponse)
 def audit(request: Request, subdirectory: str = ""):
     # exec git ls-files in a shell and get the response
     filenames = list(all_non_ignored_paths_in_directory(os.path.join("../code", subdirectory)))
