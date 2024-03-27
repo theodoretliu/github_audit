@@ -47,6 +47,7 @@ def all_files_in_directory(directory):
             files.append(entry.path)
 
     directories = sorted(directories)
+    files = sorted(files, key=lambda x: x.lower())
 
     for d in directories:
         yield from all_files_in_directory(d)
