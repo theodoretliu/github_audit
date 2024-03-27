@@ -7,6 +7,15 @@
       rel="stylesheet"
       type="text/css"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <script defer>
+      hljs.highlightAll();
+    </script>
   </head>
 </html>
 <body>
@@ -37,11 +46,7 @@
         {{ file.name }}
       </div>
 
-      <div class="overflow-scroll p-4">
-        {% for line in file.contents %}
-        <pre>{{ line }}</pre>
-        {% endfor %}
-      </div>
+      <pre><code>{{ file.contents }}</code></pre>
     </div>
     {% endfor %}
   </div>

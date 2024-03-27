@@ -69,7 +69,7 @@ def audit(request: Request, subdirectory: str = ""):
 
         final_contents = [x if len(x) > 0 else " " for x in trimmed_contents]
 
-        files.append({"name": filename[8:], "contents": final_contents})
+        files.append({"name": filename[8:], "contents": '\n'.join(final_contents)})
 
     return templates.TemplateResponse(
         request=request, name="audit.html", context={"files": files}
